@@ -592,6 +592,9 @@ export class TypebotService extends BaseChatbotService<TypebotModel, any> {
       this.logger.error('Instance not found in database');
       return;
     }
+
+
+
     // Handle session expiration
     if (session && expire && expire > 0) {
       const now = Date.now();
@@ -630,7 +633,10 @@ export class TypebotService extends BaseChatbotService<TypebotModel, any> {
           remoteJid: remoteJid,
           pushName: msg.pushName,
           botId: findTypebot.id,
-          prefilledVariables: prefilledVariables,
+          prefilledVariables: {
+            firstMessage: content,
+            ...prefilledVariables,
+          },
         });
 
         if (data?.session) {
@@ -777,7 +783,10 @@ export class TypebotService extends BaseChatbotService<TypebotModel, any> {
         remoteJid: remoteJid,
         pushName: msg?.pushName,
         botId: findTypebot.id,
-        prefilledVariables: prefilledVariables,
+        prefilledVariables: {
+          firstMessage: content,
+          ...prefilledVariables,
+        },
       });
 
       if (data?.session) {
